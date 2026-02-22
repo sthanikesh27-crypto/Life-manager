@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeHub | Your Daily Manager</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #50c878;
+            --dark: #2c3e50;
+            --light: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 250px;
+            height: 100vh;
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            position: fixed;
+        }
+
+        .main-content {
+            margin-left: 290px;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h2 { color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        .health-alert {
+            background: #ffeaa7;
+            padding: 10px;
+            border-left: 5px solid #fdcb6e;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>LifeHub</h1>
+        <p>Welcome back!</p>
+        <hr>
+        <ul>
+            <li>Dashboard</li>
+            <li>Study/Work Planner</li>
+            <li>Finances</li>
+            <li>Local Services</li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header>
+            <h1>Personal Management Dashboard</h1>
+        </header>
+
+        <div class="grid-container">
+            <div class="card">
+                <h2>📚 Smart Planner</h2>
+                <p>Focus for Students & Professionals</p>
+                <input type="text" id="taskInput" placeholder="Add a priority task...">
+                <button onclick="addTask()">Add to Schedule</button>
+                <ul id="taskList"></ul>
+            </div>
+
+            <div class="card">
+                <h2>💰 Expense Tracker</h2>
+                <p>Small Biz & Personal Budget</p>
+                <input type="number" id="amount" placeholder="Amount ($)">
+                <input type="text" id="desc" placeholder="Category (e.g., Supplies, Rent)">
+                <button onclick="addExpense()" style="background: var(--secondary);">Log Expense</button>
+                <p><strong>Total: $<span id="totalExpense">0</span></strong></p>
+            </div>
+
+            <div class="card">
+                <h2>💧 Health Reminders</h2>
+                <div class="health-alert">
+                    <p id="healthMsg">Next: Drink 250ml Water</p>
+                </div>
+                <button onclick="setReminder()">Set 1-Hour Alert</button>
+            </div>
+
+            <div class="card">
+                <h2>🔍 Local Service Finder</h2>
+                <input type="text" placeholder="Search (Plumbers, Couriers, Tech Support)">
+                <button onclick="findService()">Search Nearby</button>
+                <div id="serviceResults" style="font-size: 0.9em; margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Planner Logic
+        function addTask() {
+            let val = document.getElementById('taskInput').value;
+            if(val) {
+                let li = document.createElement('li');
+                li.textContent = val;
+                document.getElementById('taskList').appendChild(li);
+                document.getElementById('taskInput').value = '';
+            }
+        }
+
+        // Simple Expense Logic
+        let total = 0;
+        function addExpense() {
+            let amt = parseFloat(document.getElementById('amount').value);
+            if(amt) {
+                total += amt;
+                document.getElementById('totalExpense').innerText = total;
+                document.getElementById('amount').value = '';
+            }
+        }
+
+        // Mock Service Finder
+        function findService() {
+            document.getElementById('serviceResults').innerHTML = 
+                "Searching GPS... <br> Found: 3 Couriers, 2 Office Supplies nearby.";
+        }
+
+        // Health Alert
+        function setReminder() {
+            alert("Reminder set! We'll nudge you to stretch in 1 hour.");
+        }
+    </script>
+</body>
+</html>
+
